@@ -68,7 +68,13 @@
       <UniqueIdentifier>{15b4a73e-7369-4959-bb49-4b163a24b7b5}</UniqueIdentifier>
     </Filter>
     <Filter Include="Library\imgui">
-      <UniqueIdentifier>{bea1d7a4-90e2-4266-9c3c-da5803d7884a}</UniqueIdentifier>
+      <UniqueIdentifier>{fb82aec4-1a34-4f3f-9584-ae1143660836}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Object">
+      <UniqueIdentifier>{8aaa805c-4ba6-4c90-ab06-93c224769ffe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Object\BackGround">
+      <UniqueIdentifier>{d7e76d5d-d7bf-465e-97ff-75c968b310c7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -231,11 +237,14 @@
     <ClInclude Include="..\Library\imgui\imstb_textedit.h">
       <Filter>Library\imgui</Filter>
     </ClInclude>
+    <ClInclude Include="..\Library\imgui\imstb_truetype.h">
+      <Filter>Library\imgui</Filter>
+    </ClInclude>
     <ClInclude Include="..\Library\imgui\ja_glyph_ranges.h">
       <Filter>Library\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\Library\imgui\imstb_truetype.h">
-      <Filter>Library\imgui</Filter>
+    <ClInclude Include="Src\Application\object\BackGround\BackGround.h">
+      <Filter>Src\Application\Object\BackGround</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -376,6 +385,9 @@
     </ClCompile>
     <ClCompile Include="..\Library\imgui\imgui_widgets.cpp">
       <Filter>Library\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\object\BackGround\BackGround.cpp">
+      <Filter>Src\Application\Object\BackGround</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

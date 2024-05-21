@@ -19,7 +19,7 @@ void KdGameObject::SetScale(const Math::Vector3& scale)
 {
 	Math::Vector3 vecX = m_mWorld.Right();
 	Math::Vector3 vecY = m_mWorld.Up();
-	Math::Vector3 vecZ = m_mWorld.Backward();
+	Math::Vector3 vecZ = m_mWorld.Backward(); 
 	
 	vecX.Normalize();
 	vecY.Normalize();

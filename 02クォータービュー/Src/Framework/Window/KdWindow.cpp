@@ -2,9 +2,6 @@
 
 #include "KdWindow.h"
 
-//imgui
-LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
 bool KdWindow::Create(int clientWidth, int clientHeight, std::string_view titleName, std::string_view windowClassName)
 {
 	// インスタンスハンドル取得
@@ -128,6 +125,9 @@ LRESULT CALLBACK KdWindow::callWindowProc(HWND hWnd, UINT message, WPARAM wParam
 	// インスタンス側のWindow関数を実行する
 	return pThis->WindowProc(hWnd, message, wParam, lParam);
 }
+
+//imgui
+LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 // ウィンドウ関数
 LRESULT KdWindow::WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

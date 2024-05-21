@@ -96,6 +96,8 @@ void Application::KdBeginDraw(bool usePostProcess)
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
 void Application::KdPostDraw()
 {
+	ImGuiProcess();
+
 	// BackBuffer -> 画面表示
 	KdDirect3D::Instance().WorkSwapChain()->Present(0, 0);
 }
@@ -187,16 +189,6 @@ bool Application::Init(int w, int h)
 	}
 
 	//===================================================================
-	// シェーダー初期化
-	//===================================================================
-	KdShaderManager::Instance().Init();
-
-	//===================================================================
-	// オーディオ初期化
-	//===================================================================
-	KdAudioManager::Instance().Init();
-
-	//===================================================================
 	//  imgui
 	//===================================================================
 	//SetUp Dear ImGui context
@@ -216,6 +208,16 @@ bool Application::Init(int w, int h)
 	io.Fonts->AddFontDefault();
 	//日本語対応
 	io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\msgothic.ttc", 13.0f, &config, glyphRangesJapanese);
+
+	//===================================================================
+	// シェーダー初期化
+	//===================================================================
+	KdShaderManager::Instance().Init();
+
+	//===================================================================
+	// オーディオ初期化
+	//===================================================================
+	KdAudioManager::Instance().Init();
 
 	return true;
 }
@@ -277,7 +279,6 @@ void Application::Execute()
 				End();
 			}
 		}
-
 		//=========================================
 		//
 		// アプリケーション更新処理
@@ -310,25 +311,6 @@ void Application::Execute()
 
 			DrawSprite();
 		}
-		//ImGui
-		{
-			//ImGui開始
-			ImGui_ImplDX11_NewFrame();
-			ImGui_ImplWin32_NewFrame();
-			ImGui::NewFrame();
-			//ImGui Demoウィンドウ表示※凄く参考になるウィンドウです。imgui_demo.cpp参照。
-			//ImGui::ShowDemoWindow(nullptr);
-			//デバッグウィンドウ
-			if (ImGui::Begin("Debug Window"))
-			{
-				// FPS
-				ImGui::Text("FPS : %d", m_fpsController.m_nowfps);
-			}
-			ImGui::End();
-			//ImGuiのレンダリング:ここより上にimguiの描画はする事
-			ImGui::Render();
-			ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-		}
 		KdPostDraw();
 
 		//=========================================
@@ -349,22 +331,51 @@ void Application::Execute()
 // アプリケーション終了
 void Application::Release()
 {
-	//imgui解放
-	ImGui_ImplDX11_Shutdown();
-	ImGui_ImplWin32_Shutdown();
-	ImGui::DestroyContext();
-
-	//Direct3D解放
-	KdDirect3D::Instance().Release();
-
 	KdInputManager::Instance().Release();
 
 	KdShaderManager::Instance().Release();
 
 	KdAudioManager::Instance().Release();
 
+	//imgui解放
+	ImGui_ImplDX11_Shutdown();
+	ImGui_ImplWin32_Shutdown();
+	ImGui::DestroyContext();
+
 	KdDirect3D::Instance().Release();
 
 	// ウィンドウ削除
 	m_window.Release();
+}
+
+void Application::ImGuiProcess()
+{
+	//return;
+	//ImGui
+	{	//====================================================
+		//ImGui開始
+		//====================================================
+		ImGui_ImplDX11_NewFrame();
+		ImGui_ImplWin32_NewFrame();
+		ImGui::NewFrame();
+		//====================================================
+		// ImGui描画処理
+		//====================================================
+		//ImGui Demoウィンドウ表示※凄く参考になるウィンドウです。imgui_demo.cpp参照。
+		//ImGui::ShowDemoWindow(nullptr);
+		//デバッグウィンドウ
+		if (ImGui::Begin("Debug Window"))
+		{
+			// FPS
+			ImGui::Text("FPS : %d", m_fpsController.m_nowfps);
+			//日本語表示テスト
+			ImGui::Text((const char*)u8"日本語");
+		}
+		ImGui::End();
+		//====================================================
+		//ImGuiのレンダリング:ここより上にimguiの描画はする事
+		//====================================================
+		ImGui::Render();
+		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+	}
 }

@@ -1,17 +1,18 @@
 ﻿#include "GameScene.h"
 #include"../SceneManager.h"
+#include "../../Object/BackGround/BackGround.h"
 
 void GameScene::Event()
 {
-	if (GetAsyncKeyState('T') & 0x8000)
-	{
-		SceneManager::Instance().SetNextScene
-		(
-			SceneManager::SceneType::Title
-		);
-	}
+
 }
 
 void GameScene::Init()
 {
+	m_camera = std::make_unique<KdCamera>();
+	m_camera->SetProjectionMatrix(60);
+
+	std::shared_ptr<BackGround> obj;
+	obj = std::make_shared<BackGround>();
+	AddObject(obj);
 }
