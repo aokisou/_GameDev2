@@ -1,11 +1,13 @@
 ﻿#include "Player.h"
 
 #include "../../Scene/SceneManager.h"
+#include "../Attack/Attack.h"
 
 void Player::Init()
 {
 	m_pos = {};
 	m_dir = {};
+	m_attackDir = {};
 	m_spd = 0.1f;
 	m_gravity = 0.0f;
 	m_dirType = DirType::Down;
@@ -13,19 +15,18 @@ void Player::Init()
 	m_animeInfo.end = m_animeInfo.start + 3;
 	m_animeInfo.cnt = 0.0f;
 	m_animeInfo.speed = 0.2f;
-	m_polygon.SetMaterial("Asset/Textures/player.png");
-	m_polygon.SetPivot(KdSquarePolygon::PivotType::Center_Bottom);
-	m_polygon.SetSplit(4, 8);
+	m_keyFlg = false;
+	m_spPolygon = std::make_shared<KdSquarePolygon>();
+	m_spPolygon->SetMaterial("Asset/Textures/player.png");
+	m_spPolygon->SetPivot(KdSquarePolygon::PivotType::Center_Bottom);
+	m_spPolygon->SetSplit(4, 8);
+	//m_pCollider = std::make_unique<KdCollider>();
+	//m_pCollider->RegisterCollisionShape("EnemySight", m_spPolygon, KdCollider::Type::TypeSight);
 	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
 }
 
 void Player::Update()
 {
-	//if (GetAsyncKeyState(VK_UP)) { m_pos.z += m_spd; }
-	//if (GetAsyncKeyState(VK_DOWN)) { m_pos.z -= m_spd; }
-	//if (GetAsyncKeyState(VK_LEFT)) { m_pos.x -= m_spd; }
-	//if (GetAsyncKeyState(VK_RIGHT)) { m_pos.x += m_spd; }
-
 	m_dir = { 0,0,0 };
 	UINT oldDirType = m_dirType;
 	m_dirType = 0;
@@ -54,6 +55,8 @@ void Player::Update()
 	if (m_dirType != oldDirType && m_dirType != 0)
 	{
 		ChangeAnimation();
+		m_attackDir = m_dir;
+		m_attackDir.Normalize();
 	}
 	else
 	{
@@ -64,6 +67,28 @@ void Player::Update()
 	m_pos.y -= m_gravity;
 	m_gravity += 0.005f;
 	m_pos += m_dir * m_spd;
+
+	if (GetAsyncKeyState('Z'))
+	{
+		if (!m_keyFlg)
+		{
+			m_keyFlg = true;
+
+			std::shared_ptr<Attack> attack;
+			attack = std::make_shared<Attack>();
+			//プレイヤーの真ん中から方向分
+			Math::Vector3 attackPos = { m_pos + m_attackDir * 0.4f + Math::Vector3(0, 0.5f, 0) };
+			attack->SetPos(attackPos);
+			SceneManager::Instance().AddObject(attack);
+			
+			//攻撃SE
+			KdAudioManager::Instance().Play("Asset/Sounds/Attack.WAV");
+		}
+	}
+	else
+	{
+		m_keyFlg = false;
+	}
 
 	int animeCnt = 0;
 
@@ -76,7 +101,7 @@ void Player::Update()
 		m_animeInfo.cnt = 0;
 	}
 
-	m_polygon.SetUVRect(animeCnt);
+	m_spPolygon->SetUVRect(animeCnt);
 
 	KdCollider::RayInfo ray;
 	ray.m_pos = m_pos;
@@ -128,12 +153,12 @@ void Player::PostUpdate()
 
 void Player::GenerateDepthMapFromLight()
 {
-	KdShaderManager::Instance().m_StandardShader.DrawPolygon(m_polygon, m_mWorld);
+	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_spPolygon, m_mWorld);
 }
 
 void Player::DrawLit()
 {
-	KdShaderManager::Instance().m_StandardShader.DrawPolygon(m_polygon, m_mWorld);
+	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_spPolygon, m_mWorld);
 }
 
 void Player::ChangeAnimation()

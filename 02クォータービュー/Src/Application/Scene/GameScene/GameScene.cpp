@@ -4,6 +4,7 @@
 #include "../../Object/BackGround/BackGround.h"
 #include "../../Object/Ground/Ground.h"
 #include "../../Object/Player/Player.h"
+#include "../../Object/Enemy/Enemy.h"
 
 void GameScene::Event()
 {
@@ -35,4 +36,13 @@ void GameScene::Init()
 	ply = std::make_shared<Player>();
 	AddObject(ply);
 	m_wpPlayer = ply;
+
+	std::shared_ptr<Enemy> emy;
+	for (int i = 0; i < 20; i++)
+	{
+		emy = std::make_shared<Enemy>();
+		emy->SetPos(Math::Vector3(i * 10 - 50.0f, 0, 20.0f));
+		emy->SetTarget(ply);
+		AddObject(emy);
+	}
 }

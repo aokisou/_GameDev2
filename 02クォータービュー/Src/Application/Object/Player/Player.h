@@ -31,16 +31,20 @@ private:
 	void Init()override;
 	void ChangeAnimation();
 
-	Math::Vector3 m_pos;
+	Math::Vector3 m_pos = {};
 	//方向ベクトル
-	Math::Vector3 m_dir;
+	Math::Vector3 m_dir = {};
 	//力ベクトル
 	float m_spd = 0.0f;
 	float m_gravity = 0.0f;
+
+	Math::Vector3 m_attackDir = {};
 
 	UINT m_dirType = DirType::Down;
 
 	AnimationInfo m_animeInfo;
 
-	KdSquarePolygon m_polygon;
+	std::shared_ptr<KdSquarePolygon> m_spPolygon;
+
+	bool m_keyFlg = false;
 };

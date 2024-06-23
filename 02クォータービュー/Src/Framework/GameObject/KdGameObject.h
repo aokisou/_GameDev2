@@ -52,6 +52,9 @@ public:
 	virtual bool IsVisible()	const { return false; }
 	virtual bool IsRideable()	const { return false; }
 
+	//Hit時の処理
+	virtual void OnHit() {}
+
 	// 視錐台範囲内に入っているかどうか
 	virtual bool CheckInScreen(const DirectX::BoundingFrustum&) const { return false; }
 
