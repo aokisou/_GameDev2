@@ -91,6 +91,9 @@
     <Filter Include="Src\Application\GameObject\Character\Player">
       <UniqueIdentifier>{46fc8b8d-da98-4784-9290-0ee4da9557b7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\GameObject\Terrains\WoodenBox">
+      <UniqueIdentifier>{84cc6096-8639-43df-8090-9b4c55a9aa5a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -270,6 +273,9 @@
     <ClInclude Include="Src\Application\GameObject\Character\Player\Player.h">
       <Filter>Src\Application\GameObject\Character\Player</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\GameObject\Terrains\WoodenBox\WoodenBox.h">
+      <Filter>Src\Application\GameObject\Terrains\WoodenBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -421,6 +427,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\GameObject\Character\Player\Player.cpp">
       <Filter>Src\Application\GameObject\Character\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\GameObject\Terrains\WoodenBox\WoodenBox.cpp">
+      <Filter>Src\Application\GameObject\Terrains\WoodenBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
