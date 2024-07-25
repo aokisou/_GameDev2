@@ -56,30 +56,34 @@ void Player::Update()
 
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 	{
-		if (!m_bShot)
-		{
-			if (!m_wpWeapon.expired())
-			{
-				m_wpWeapon.lock()->ShotBullet();
-			}
-			m_bShot = true;
-		}
-	}
-	else
-	{
-		m_bShot = false;
-	}
-
-	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
-	{
-		if (!m_bShot)
+		if (!m_bLeft)
 		{
 			if (!m_wpWeapon.expired())
 			{
 				m_wpWeapon.lock()->ShotBullet(true);
 			}
-			m_bShot = true;
+			m_bLeft = true;
 		}
+	}
+	else
+	{
+		m_bLeft = false;
+	}
+
+	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000)
+	{
+		if (!m_bRight)
+		{
+			if (!m_wpWeapon.expired())
+			{
+				m_wpWeapon.lock()->ShotBullet();
+			}
+			m_bRight = true;
+		}
+	}
+	else
+	{
+		m_bRight = false;
 	}
 
 	UpdateRotateByMouse();

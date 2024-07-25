@@ -41,7 +41,8 @@ private:
 	const float m_adjustHeight = 10.0f;
 	const float m_jumpPow = 1.0f;
 	bool m_bJump = {};
-	bool m_bShot = {};
+	bool m_bLeft = {};
+	bool m_bRight = {};
 
 	const float m_gravityPow = 0.04f;
 	float m_gravity = {};

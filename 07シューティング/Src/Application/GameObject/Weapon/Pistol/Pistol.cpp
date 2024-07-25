@@ -70,6 +70,18 @@ void Pistol::Update()
 					SceneManager::Instance().AddObject(exp);
 				}
 			}
+			else
+			{
+				if (isHit)
+				{
+					std::shared_ptr<Bullet> bullet = std::make_shared<Bullet>();
+					bullet->Init();
+					Math::Vector3 dir = hitPos - muzzleMat.Translation();
+					dir.Normalize();
+					bullet->Shot(muzzleMat.Translation(), dir);
+					SceneManager::Instance().AddObject(bullet);
+				}
+			}
 
 			m_bShot = false;
 			m_bRayBullet = false;
