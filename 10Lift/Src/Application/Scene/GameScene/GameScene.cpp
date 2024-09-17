@@ -9,6 +9,7 @@
 #include "../../GameObject/Weapon/Pistol/Pistol.h"
 #include "../../GameObject/UI/Reticle/Reticle.h"
 #include "../../GameObject/Terrains/Cloud/Cloud.h"
+#include "../../GameObject/Terrains/Lift/Lift.h"
 
 void GameScene::Event()
 {
@@ -17,6 +18,10 @@ void GameScene::Event()
 void GameScene::Init()
 {
 	ShowCursor(false);
+
+	std::shared_ptr<Lift> lift = std::make_shared<Lift>();
+	lift->Init();
+	AddObject(lift);
 
 	std::shared_ptr<Player> player = std::make_shared<Player>();
 	player->Init();
